@@ -19,9 +19,7 @@ import lombok.NoArgsConstructor;
 public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	private int employeeId;
-
 	@Column(name = "Employee_Name")
 	@NotBlank
 	@Size(max = 15, min = 5, message = "Name should contain in between 5 and 15")
