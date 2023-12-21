@@ -3,6 +3,8 @@ package com.qsp.SpringDemo.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,56 +20,60 @@ import com.qsp.SpringDemo.Entity.Employee;
 import com.qsp.SpringDemo.ExceptionHandling.EmailNotValidException;
 import com.qsp.SpringDemo.ExceptionHandling.IdNotFoundException;
 import com.qsp.SpringDemo.ExceptionHandling.PasswordInvalidException;
+import com.qsp.SpringDemo.ResponseStructure.ResponseStructure;
 import com.qsp.SpringDemo.Service.EmployeeService;
 
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 
 @RestController
-@RequestMapping("/employee/test")
+@RequestMapping("/api/employee")
 public class EmployeeController {
-
 	@Autowired
-	EmployeeService service;
+	EmployeeService employeeService;
 
 	@PostMapping("/save")
-	public Employee emp(@Valid  @RequestBody Employee employee) {
-		Employee emp = service.save(employee);
-		return emp;
+	public ResponseEntity<?> save(@RequestBody Employee employee) {
+		ResponseStructure<Employee> save = employeeService.save(employee);
+		return new ResponseEntity<>(save, HttpStatus.OK);
 	}
 
-	@GetMapping("/getAll")
-	public List<Employee> employee() {
-		List<Employee> employee = service.getAll();
-		return employee;
+	@GetMapping("/fetchAll")
+	public ResponseEntity<?> fetchAll() {
+		ResponseStructure<List<Employee>> save = employeeService.fetchAll();
+		return new ResponseEntity<>(save, HttpStatus.OK);
 	}
 
-	@GetMapping("/getOne/{id}")
-	public Employee employee(@PathVariable int id) throws IdNotFoundException {
-		Employee employee = service.getOne(id);
-		return employee;
+	@GetMapping("/fetchOne/{id}")
+	public ResponseEntity<?> fetchOne(@PathVariable int id) throws IdNotFoundException {
+		ResponseStructure<Employee> save = employeeService.fetchOne(id);
+		return new ResponseEntity<>(save, HttpStatus.OK);
 	}
 
 	@PutMapping("/update/{id}")
-	public Employee update(@RequestBody Employee employee, @PathVariable int id) throws IdNotFoundException {
-		Employee employee2 = service.update(employee, id);
-		return employee2;
+	public ResponseEntity<?> update(@PathVariable int id, @RequestBody Employee employee) throws IdNotFoundException {
+		ResponseStructure<Employee> save = employeeService.update(id, employee);
+		return new ResponseEntity<>(save, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public String delete(@PathVariable int id) throws IdNotFoundException {
-		String s = service.delete(id);
-		return s;
+	public ResponseEntity<?> delete(@PathVariable int id) throws IdNotFoundException {
+		ResponseStructure<String> save = employeeService.delete(id);
+		return new ResponseEntity<>(save, HttpStatus.OK);
 	}
-	
-	@GetMapping("/getByName")
-	public String validateUser(@RequestParam String empEmail,@RequestParam String empPassword) throws IdNotFoundException, PasswordInvalidException, EmailNotValidException
-	{
-		
-		
-		System.out.println(empEmail + " wel" +empPassword);
-		 return service.validate(empEmail,empPassword);
-		
+
+	@GetMapping("/loginByEmail")
+	public ResponseEntity<?> loginByEmail(@RequestParam String email, @RequestParam String password)
+			throws EmailNotValidException, PasswordInvalidException {
+		ResponseStructure<String> loginByEmail = employeeService.loginByEmail(email, password);
+		return new ResponseEntity<>(loginByEmail, HttpStatus.ACCEPTED);
+	}
+
+	@GetMapping("/loginByName")
+	public ResponseEntity<?> loginByName(@RequestParam String name, @RequestParam String password)
+			throws EmailNotValidException, PasswordInvalidException {
+		ResponseStructure<String> loginByEmail = employeeService.loginByName(name, password);
+		return new ResponseEntity<>(loginByEmail, HttpStatus.ACCEPTED);
 	}
 
 }

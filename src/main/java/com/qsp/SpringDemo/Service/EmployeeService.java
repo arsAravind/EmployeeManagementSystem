@@ -6,19 +6,20 @@ import com.qsp.SpringDemo.Entity.Employee;
 import com.qsp.SpringDemo.ExceptionHandling.EmailNotValidException;
 import com.qsp.SpringDemo.ExceptionHandling.IdNotFoundException;
 import com.qsp.SpringDemo.ExceptionHandling.PasswordInvalidException;
+import com.qsp.SpringDemo.ResponseStructure.ResponseStructure;
 
 public interface EmployeeService {
 
-	Employee save(Employee employee);
+	ResponseStructure<Employee> save(Employee employee);
 
-	List<Employee> getAll();
+	ResponseStructure<List<Employee>> fetchAll();
 
-	Employee getOne(int id) throws IdNotFoundException;
+	ResponseStructure<Employee> fetchOne(int id) throws IdNotFoundException;
 
-	Employee update(Employee employee, int id) throws IdNotFoundException;
+	ResponseStructure<Employee> update(int id, Employee employee) throws IdNotFoundException;
 
-	String delete(int id) throws IdNotFoundException;
+	ResponseStructure<String> delete(int id) throws IdNotFoundException;
 
-	String validate(String email, String password) throws IdNotFoundException, PasswordInvalidException, EmailNotValidException;
+	ResponseStructure<String> loginByEmail(String email, String password) throws EmailNotValidException, PasswordInvalidException;
 
-}
+	ResponseStructure<String> loginByName(String name, String password) throws EmailNotValidException, PasswordInvalidException;}
