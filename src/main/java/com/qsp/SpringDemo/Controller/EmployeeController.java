@@ -33,7 +33,7 @@ public class EmployeeController {
 	EmployeeService employeeService;
 
 	@PostMapping("/save")
-	public ResponseEntity<?> save(@RequestBody Employee employee) {
+	public ResponseEntity<?> save(@Valid @RequestBody Employee employee) {
 		ResponseStructure<Employee> save = employeeService.save(employee);
 		return new ResponseEntity<>(save, HttpStatus.OK);
 	}
