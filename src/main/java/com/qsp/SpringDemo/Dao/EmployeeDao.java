@@ -20,14 +20,12 @@ public class EmployeeDao {
 	public Employee save(Employee employee) {
 		Employee save = employeeRepo.save(employee);
 		return save;
-
 	}
 
 	public List<Employee> fechAll() {
 
 		List<Employee> findAll = employeeRepo.findAll();
 		return findAll;
-
 	}
 
 	public Employee fetchOne(int id) throws IdNotFoundException {
@@ -64,25 +62,19 @@ public class EmployeeDao {
 		} else {
 			throw new EmailNotValidException();
 		}
-
 	}
 
-	public String loginByName(String name, String password) throws EmailNotValidException, PasswordInvalidException  {
-		
-		Employee e=employeeRepo.findByEmployeeName(name);
-		if(e!=null)
-		{
-			if(e.getEmployeePassword().equals(password));
-			{
-				return "Login Successfull ny username";
+	public String loginByName(String name, String password) throws EmailNotValidException, PasswordInvalidException {
+
+		Employee e = employeeRepo.findByEmployeeName(name);
+		if (e != null) {
+			if (e.getEmployeePassword().equals(password)) {
+				return "Login Successfully by username";
+			} else {
+				throw new PasswordInvalidException();
 			}
-			
-		}
-		else
-		{
+		} else {
 			throw new EmailNotValidException();
 		}
-		
 	}
-
 }
