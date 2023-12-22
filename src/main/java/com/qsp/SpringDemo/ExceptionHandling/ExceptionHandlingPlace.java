@@ -1,5 +1,6 @@
 package com.qsp.SpringDemo.ExceptionHandling;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,17 +16,23 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ExceptionHandlingPlace {
 
 	@ExceptionHandler(IdNotFoundException.class)
-	public ResponseEntity<Object> entity(IdNotFoundException id) {
-		return new ResponseEntity<Object>(id.getMessage(), HttpStatus.BAD_REQUEST);
+	public ResponseEntity<?> entity(IdNotFoundException id) {
+		
+		APIErrorStructure a1=new APIErrorStructure();
+		a1.setDateTime(LocalDateTime.now());
+		a1.setHttpMessage("not found");
+		a1.setHttpStatucScode(400);
+		a1.setHttpStatus(HttpStatus.BAD_GATEWAY);
+		return new ResponseEntity<>(a1, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(PasswordInvalidException.class)
-	public ResponseEntity<Object> entity(PasswordInvalidException p) {
-		return new ResponseEntity<Object>(p.getMessage(), HttpStatus.BAD_REQUEST);
+	public ResponseEntity<?> entity(PasswordInvalidException p) {
+		return new ResponseEntity<>(p.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(EmailNotValidException.class)
-	public ResponseEntity<Object> entity(EmailNotValidException e) {
+	public ResponseEntity<?> entity(EmailNotValidException e) {
 		ResponseEntity<Object> res = new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
 
 		return res;
@@ -44,5 +51,4 @@ public class ExceptionHandlingPlace {
 //		}
 		return map;
 	}
-
 }
