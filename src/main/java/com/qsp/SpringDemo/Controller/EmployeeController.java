@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,7 +34,7 @@ public class EmployeeController {
 	EmployeeService employeeService;
 
 	@PostMapping("/save")
-	public ResponseEntity<?> save(@Valid @RequestBody Employee employee) {
+	public ResponseEntity<?> save(  @Valid @RequestBody Employee employee) {
 		ResponseStructure<Employee> save = employeeService.save(employee);
 		return new ResponseEntity<>(save, HttpStatus.OK);
 	}

@@ -11,6 +11,6 @@ public class APIErrorStructure {
 	
 	private HttpStatus httpStatus;
 	private String httpMessage;
-	private int httpStatucScode;
+	private int httpStatuscode;
 	private LocalDateTime dateTime;
 }

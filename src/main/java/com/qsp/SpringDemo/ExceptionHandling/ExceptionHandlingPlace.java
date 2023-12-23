@@ -21,7 +21,7 @@ public class ExceptionHandlingPlace {
 		APIErrorStructure a1=new APIErrorStructure();
 		a1.setDateTime(LocalDateTime.now());
 		a1.setHttpMessage("Employee data not updated");
-		a1.setHttpStatucScode(400);
+		a1.setHttpStatuscode(400);
 		a1.setHttpStatus(HttpStatus.BAD_GATEWAY);
 		return new ResponseEntity<>(a1, HttpStatus.BAD_REQUEST);
 	}
